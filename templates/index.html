@@ -10,35 +10,62 @@
     <header>
         <h1>Trading Journal</h1>
     </header>
+     <section id="add-trade">
+        <h2>Add Trade</h2>
+        <form action="/add-trade" method="post">
+            <label for="symbol">Symbol:</label>
+            <input type="text" id="symbol" name="symbol" required><br>
 
+            <!-- Add other trade fields as needed -->
+
+            <button type="submit">Add Trade</button>
+        </form>
+    </section>   
     <section id="trade-log">
         <h2>Trade Log</h2>
         <table>
             <tr>
-                <th>Symbol</th>
-                <th>Entry Price</th>
-                <th>Quantity</th>
+                <th>TradeID</th>
                 <th>Date</th>
-                <th>Information</th>
+                <th>Symbol</th>
+                <th>Side</th>
+                <th>Entry Time</th>
+                <th>Entry Price</th>
+                <th>Size</th>
+                <th>Stop Loss</th>
                 <th>Exit Price</th>
-                <th>Fees</th>
+                <th>Exit Time</th>
+                <th>Exit Date</th>
+                <th>Commission</th>
                 <th>P/L</th>
-                <th>Realized</th>
+                <th>Win/Loss</th>
+                <th>RRR</th>
+                <th>Setup</th>
+                <th>Mistakes</th>
+                <th>Lessons</th>
             </tr>
             {{range .Trades}}
                 <tr>
+                    <td>{{.TradeID}}</td>
+                    <td>{{.Date.Format "02-01-2006"}}</td>
                     <td>{{.Symbol}}</td>
+                    <td>{{.Side}}</td>
+                    <td>{{.EntryTime}}</td>
                     <td>${{.EntryPrice}}</td>
-                    <td>{{.Quantity}}</td>
-                    <td>{{.Date}}</td>
-                    <td>{{.Information}}</td>
+                    <td>{{.Size}}</td>
+                    <td>${{.StopLoss}}</td>
                     <td>${{.ExitPrice}}</td>
-                    <td>${{.Fees}}</td>
+                    <td>{{.ExitTime}}</td>
+                    <td>{{.ExitDate}}</td>
+                    <td>${{.Commission}}</td>
                     <td>${{.PL}}</td>
-                    <td>${{.Realized}}</td>
+                    <td>{{.WinLoss}}</td>
+                    <td>{{.RRR}}</td>
+                    <td class="setup">{{.Setup}}</td>
+                    <td class="mistakes">{{.Mistakes}}</td>
+                    <td class="lessons">{{.Lessons}}</td>
                 </tr>
             {{end}}
         </table>
     </section>
 </body>
-</html>
