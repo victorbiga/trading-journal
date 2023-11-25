@@ -7,12 +7,6 @@ import (
 	"time"
 )
 
-// Define getNextTradeID function
-func getNextTradeID(date string) string {
-	// Your implementation here, you can use a counter, database, or any logic
-	return "1" // Assuming TradeID is a string
-}
-
 func main() {
 	// Example trades for stocks from the stocks.go file
 	stockTrades := GetStockTrades()
@@ -39,7 +33,7 @@ func main() {
 
 			// Create a new trade
 			newTrade := Trades{
-				TradeID: getNextTradeID(time.Now().Format("2006-01-02")),
+	  		TradeID: GetNextTradeID(),
 				Date:    time.Now(),
 				Symbol:  symbol,
 				// Set other trade fields based on form values
