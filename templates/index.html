@@ -1,71 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trading Journal</title>
     <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
+    <script>
+        function filterSymbols() {
+            var input, filter, select, options, i, symbol;
+            input = document.getElementById("symbol");
+            filter = input.value.toUpperCase();
+            select = document.getElementById("symbolOptions");
+            options = select.getElementsByTagName("option");
+            
+            for (i = 0; i < options.length; i++) {
+                symbol = options[i].text;
+                if (symbol.toUpperCase().indexOf(filter) > -1) {
+                    options[i].style.display = "";
+                } else {
+                    options[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+  </head>
+  <body>
     <header>
-        <h1>Trading Journal</h1>
+      <img src="/static/treidbot.gif" alt="Treidbot Logo">
+      <h1>Forex Trading Journal</h1>
     </header>
-     <section id="add-trade">
-        <h2>Add Trade</h2>
-        <form action="/add-trade" method="post">
-            <label for="symbol">Symbol:</label>
-            <input type="text" id="symbol" name="symbol" required><br>
-
-            <!-- Add other trade fields as needed -->
-
-            <button type="submit">Add Trade</button>
-        </form>
-    </section>   
     <section id="trade-log">
-        <h2>Trade Log</h2>
-        <table>
-            <tr>
-                <th>TradeID</th>
-                <th>Date</th>
-                <th>Symbol</th>
-                <th>Side</th>
-                <th>Entry Time</th>
-                <th>Entry Price</th>
-                <th>Size</th>
-                <th>Stop Loss</th>
-                <th>Exit Price</th>
-                <th>Exit Time</th>
-                <th>Exit Date</th>
-                <th>Commission</th>
-                <th>P/L</th>
-                <th>Win/Loss</th>
-                <th>RRR</th>
-                <th>Setup</th>
-                <th>Mistakes</th>
-                <th>Lessons</th>
-            </tr>
-            {{range .Trades}}
-                <tr>
-                    <td>{{.TradeID}}</td>
-                    <td>{{.Date.Format "02-01-2006"}}</td>
-                    <td>{{.Symbol}}</td>
-                    <td>{{.Side}}</td>
-                    <td>{{.EntryTime}}</td>
-                    <td>${{.EntryPrice}}</td>
-                    <td>{{.Size}}</td>
-                    <td>${{.StopLoss}}</td>
-                    <td>${{.ExitPrice}}</td>
-                    <td>{{.ExitTime}}</td>
-                    <td>{{.ExitDate}}</td>
-                    <td>${{.Commission}}</td>
-                    <td>${{.PL}}</td>
-                    <td>{{.WinLoss}}</td>
-                    <td>{{.RRR}}</td>
-                    <td class="setup">{{.Setup}}</td>
-                    <td class="mistakes">{{.Mistakes}}</td>
-                    <td class="lessons">{{.Lessons}}</td>
-                </tr>
-            {{end}}
-        </table>
+      <h2>Trade Log</h2>
+      <table>
+        <tr>
+          <th>TradeID</th>
+          <th>Date</th>
+          <th>Symbol</th>
+          <th>Side</th>
+          <th>Entry Time</th>
+          <th>Entry Price</th>
+          <th>Size</th>
+          <th>Stop Loss</th>
+          <th>Exit Price</th>
+          <th>Exit Time</th>
+          <th>Exit Date</th>
+          <th>Commission</th>
+          <th>P/L</th>
+          <th>Win/Loss</th>
+          <th>RRR</th>
+          <th>Setup</th>
+          <th>Mistakes</th>
+          <th>Lessons</th>
+        </tr>
+        {{range .Trades}}
+        <tr>
+          <td>{{.TradeID}}</td>
+          <td>{{.Date.Format "02-01-2006"}}</td>
+          <td>{{.Symbol}}</td>
+          <td>{{.Side}}</td>
+          <td>{{.EntryTime}}</td>
+          <td>${{.EntryPrice}}</td>
+          <td>{{.Size}}</td>
+          <td>${{.StopLoss}}</td>
+          <td>${{.ExitPrice}}</td>
+          <td>{{.ExitTime}}</td>
+          <td>{{.ExitDate}}</td>
+          <td>${{.Commission}}</td>
+          <td>${{.PL}}</td>
+          <td>{{.WinLoss}}</td>
+          <td>{{.RRR}}</td>
+          <td class="setup">{{.Setup}}</td>
+          <td class="mistakes">{{.Mistakes}}</td>
+          <td class="lessons">{{.Lessons}}</td>
+        </tr>
+        {{end}}
+      </table>
     </section>
-</body>
+    <section id="add-trade">
+      <h2>Add Trade</h2>
+      <form action="/add-trade" method="post">
+        <table>
+          <tr>
+            <td><label for="symbol">Symbol:</label></td>
+            <td>
+              <input type="text" id="symbol" name="symbol" oninput="filterSymbols()" required>
+              <select id="symbolOptions" name="symbol" size="5" onchange="document.getElementById('symbol').value=this.value" required>
+                <option value="" disabled selected>Select a symbol</option>
+                <option value="AUDCAD">AUD/CAD</option>
+                <option value="AUDCHF">AUD/CHF</option>
+                <option value="AUDJPY">AUD/JPY</option>
+                <option value="AUDNZD">AUD/NZD</option>
+                <option value="CADCHF">CAD/CHF</option>
+                <option value="CADJPY">CAD/JPY</option>
+                <option value="CHFJPY">CHF/JPY</option>
+                <option value="EURAUD">EUR/AUD</option>
+                <option value="EURCAD">EUR/CAD</option>
+                <option value="EURCHF">EUR/CHF</option>
+                <option value="EURGBP">EUR/GBP</option>
+                <option value="EURJPY">EUR/JPY</option>
+                <option value="EURNZD">EUR/NZD</option>
+                <option value="GBPAUD">GBP/AUD</option>
+                <option value="GBPCAD">GBP/CAD</option>
+                <option value="GBPCHF">GBP/CHF</option>
+                <option value="GBPJPY">GBP/JPY</option>
+                <option value="GBPNZD">GBP/NZD</option>
+                <option value="NZDCAD">NZD/CAD</option>
+                <option value="NZDCHF">NZD/CHF</option>
+                <option value="NZDJPY">NZD/JPY</option>
+                <option value="USDCAD">USD/CAD</option>
+                <option value="USDCHF">USD/CHF</option>
+                <option value="USDCNH">USD/CNH</option>
+                <option value="USDCZK">USD/CZK</option>
+                <option value="USDDKK">USD/DKK</option>
+                <option value="USDHKD">USD/HKD</option>
+                <option value="USDHUF">USD/HUF</option>
+                <option value="USDINR">USD/INR</option>
+                <option value="USDJPY">USD/JPY</option>
+                <option value="USDMXN">USD/MXN</option>
+                <option value="USDNOK">USD/NOK</option>
+                <option value="USDPLN">USD/PLN</option>
+                <option value="USDRUB">USD/RUB</option>
+                <option value="USDSEK">USD/SEK</option>
+                <option value="USDSGD">USD/SGD</option>
+                <option value="USDTHB">USD/THB</option>
+                <option value="USDTRY">USD/TRY</option>
+                <option value="USDZAR">USD/ZAR</option>
+                <option value="XAUUSD">XAU/USD (Gold)</option>
+                <option value="XAGUSD">XAG/USD (Silver)</option>
+                <!-- Add more forex pairs as needed -->
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="side">Side (Long/Short):</label></td>
+            <td>
+              <select id="side" name="side" required>
+                <option value="Long">Long</option>
+                <option value="Short">Short</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="entry-time">Entry Time:</label></td>
+            <td><input type="text" id="entry-time" name="entry-time" placeholder="HH:mm:ss" required></td>
+          </tr>
+          <tr>
+            <td><label for="entry-price">Entry Price:</label></td>
+            <td><input type="number" id="entry-price" name="entry-price" step="0.01" required></td>
+          </tr>
+          <!-- Add more trade fields as needed -->
+        </table>
+        <button type="submit">Add Trade</button>
+      </form>
+    </section>
+    <footer>
+      <p>Treidbot 2024</p>
+    </footer>
+  </body>
