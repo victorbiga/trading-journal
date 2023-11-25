@@ -33,7 +33,7 @@ func main() {
 
 			// Create a new trade
 			newTrade := Trades{
-	  		TradeID: GetNextTradeID(),
+				TradeID: GetNextTradeID(),
 				Date:    time.Now(),
 				Symbol:  symbol,
 				// Set other trade fields based on form values
