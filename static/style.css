@@ -8,7 +8,7 @@ table {
 th, td {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 0.8vw;
     white-space: nowrap; /* Ensures that text does not wrap to the next line */
 }
 
@@ -26,4 +26,5 @@ th {
 body {
     background-color: white;
     font-family: sans-serif;
+    font-size: 0.8vw; /* Set the font size relative to the viewport width */
 }
