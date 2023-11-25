@@ -1,22 +1,39 @@
-# Use the official Go image as the base image
-FROM golang:latest
-
-# Set the working directory inside the container
+# Stage 1: Build Stage
+FROM golang:latest AS build
 WORKDIR /app
 
-# Copy the Go module files
-COPY go.mod ./
-
-# Download and install dependencies
+# Copy only the necessary files for dependency download
+COPY go.* ./
 RUN go mod download
 
-# Copy the Go application files to the container
+# Copy the entire project
 COPY . .
 
-# Build the Go application
+# Build the application
 RUN go build -o main .
+
+# Stage 2: Final Stage
+FROM golang:latest
+WORKDIR /app
+
+# Copy only the compiled binary from the build stage
+COPY --from=build /app/main .
+
+# Copy the 'templates' and 'static' directories
+COPY --from=build /app/templates ./templates
+COPY --from=build /app/static ./static
+
+# Create a non-root user
+RUN groupadd -g 1000 nonroot && useradd -u 1000 -g nonroot nonroot
+
+# Change ownership of the application binary to the non-root user
+RUN chown nonroot:nonroot /app/main
 
 # Expose the port that the application will run on
 EXPOSE 8080
 
-# Command to run the Go application
+# Switch to the non-root user
+USER nonroot
+
+# Specify the default command to run when the container starts
+ENTRYPOINT [ "./main"]
