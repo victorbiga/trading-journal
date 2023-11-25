@@ -9,9 +9,21 @@ th, td {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+    white-space: nowrap; /* Ensures that text does not wrap to the next line */
+}
+
+/* Customize the styles for specific columns where you want text to potentially span multiple lines */
+td.setup, td.mistakes, td.lessons {
+    white-space: normal; /* Allow text to wrap to the next line */
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #6600cc;
+    color: white;
+    font-weight: bold;
 }
 
+body {
+    background-color: white;
+    font-family: sans-serif;
+}
