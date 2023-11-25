@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Journal</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Trading Journal</h1>
+    </header>
+
+    <section id="trade-log">
+        <h2>Trade Log</h2>
+        <table>
+            <tr>
+                <th>Symbol</th>
+                <th>Entry Price</th>
+                <th>Quantity</th>
+                <th>Date</th>
+                <th>Information</th>
+                <th>Exit Price</th>
+                <th>Fees</th>
+                <th>P/L</th>
+                <th>Realized</th>
+            </tr>
+            {{range .Trades}}
+                <tr>
+                    <td>{{.Symbol}}</td>
+                    <td>${{.EntryPrice}}</td>
+                    <td>{{.Quantity}}</td>
+                    <td>{{.Date}}</td>
+                    <td>{{.Information}}</td>
+                    <td>${{.ExitPrice}}</td>
+                    <td>${{.Fees}}</td>
+                    <td>${{.PL}}</td>
+                    <td>${{.Realized}}</td>
+                </tr>
+            {{end}}
+        </table>
+    </section>
+</body>
+</html>
